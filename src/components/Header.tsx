@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function Header() {
-  const [currentDate, setCurrentDate] = useState(
-    new Date().toLocaleDateString(),
-  );
+  const [currentDate] = useState(new Date().toLocaleDateString());
 
-  const [currentStatus, setCurrentStatus] = useState("Placehoulder");
-  const [currentLocation, setCurrentLocation] = useState("Placehoulder");
+  const [currentStatus] = useState("Placehoulder");
+  const [currentLocation] = useState("Placehoulder");
 
   return (
     <>
