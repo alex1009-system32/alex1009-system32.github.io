@@ -1,11 +1,11 @@
-import { useGithubRepo } from "../services/useGithubRepos";
+import { useGitHubRepo } from "../services/useGithub";
 
 interface ProjectListProps {
   username: string;
 }
 
 const ProjectList = ({ username }: ProjectListProps) => {
-  const { data: repos, isLoading, isError, error } = useGithubRepo(username);
+  const { data: repos, isLoading, isError, error } = useGitHubRepo(username);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -40,7 +40,7 @@ const ProjectList = ({ username }: ProjectListProps) => {
               </div>
               <div className="flex gap-4 mt-2">
                 <a
-                  className="text-sm hover:underline hover:text-sand-500 hover:bg-wood-950 py-0 px-2"
+                  className="text-sm underline hover:text-sand-500 hover:bg-wood-950 p-0"
                   href={repo.project_url}
                   target="_blank"
                 >

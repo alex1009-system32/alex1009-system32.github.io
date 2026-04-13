@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchGitHubRepos } from "./githubService";
+import { fetchGitHubRepos, fetchGitHubUser } from "./githubService";
 
-export const useGithubRepo = (username: string) => {
+export const useGitHubRepo = (username: string) => {
   return useQuery({
     queryKey: ["githubRepos", username],
     queryFn: () => fetchGitHubRepos(username),
@@ -19,5 +19,20 @@ export const useGithubRepo = (username: string) => {
         archived: repo.archived,
         language: repo.language || "Mixed",
       })),
+  });
+};
+
+export const useGitHubUser = (username: string) => {
+  return useQuery({
+    queryKey: ["githubUser", username],
+    queryFn: () => fetchGitHubUser(username),
+
+    enabled: !!username,
+
+    select: (data) => ({
+      name: data.name,
+      img_url: data.avatar_url,
+      loc: data.location || "Not given",
+    }),
   });
 };
