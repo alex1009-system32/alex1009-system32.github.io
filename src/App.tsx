@@ -1,17 +1,19 @@
 import About from "./components/About";
 import Header from "./components/Header";
 import Skills from "./components/Skills";
-import Projects from "./components/Projects";
+import Projects from "./components/Project";
 
 function App() {
+  const username = "alex1009-system32";
+
   return (
     <>
       <div className="bg-sand-500 bg-[https://www.transparenttextures.com/patterns/p6-mini.png]">
         <div className="px-96 py-9 font-mono text-wood-950 selection:bg-wood-950 selection:text-sand-500">
-          <Header />
-          <About />
+          <Header username={username} />
+          <About username={username} />
           <Skills />
-          <Projects />
+          <Projects username={username} />
         </div>
       </div>
     </>

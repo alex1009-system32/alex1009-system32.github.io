@@ -31,6 +31,7 @@ export const useGitHubUser = (username: string) => {
 
     select: (data) => ({
       name: data.name,
+      bio: data.bio || "Not given",
       img_url: data.avatar_url,
       loc: data.location || "Not given",
     }),

@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { useGitHubUser } from "../services/useGithub";
 
-function Header() {
+interface HeaderProps {
+  username: string;
+}
+
+function Header({ username }: HeaderProps) {
   const [currentDate] = useState(new Date().toLocaleDateString());
 
-  const {
-    data: user,
-    isLoading,
-    isError,
-    error,
-  } = useGitHubUser("alex1009-system32");
+  const { data: user, isLoading, isError, error } = useGitHubUser(username);
 
   if (isLoading) {
     return <div>Loading...</div>;
