@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useGitHubRepo } from "../services/useGithub";
 
 interface ProjectProps {
@@ -5,7 +6,12 @@ interface ProjectProps {
 }
 
 function Projects({ username }: ProjectProps) {
+  const [visibileCount, setVisibleCount] = useState(3);
   const { data: repos, isLoading, isError, error } = useGitHubRepo(username);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 3);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -24,7 +30,7 @@ function Projects({ username }: ProjectProps) {
       </div>
       <div>
         <section>
-          {repos.map((repo: any) => (
+          {repos.slice(0, visibileCount).map((repo: any) => (
             <div className="relative group my-9">
               <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-sand-900 group-hover:bg-wood-950"></div>
               <div className="absolute left-3.25 top-0 w-4 h-4 bg-sand-900 rounded-full group-hover:bg-wood-950"></div>
@@ -56,6 +62,16 @@ function Projects({ username }: ProjectProps) {
               </div>
             </div>
           ))}
+          {visibileCount < repos.length && (
+            <div className="flex justify-center align-middle">
+              <button
+                className="text-sm underline hover:text-sand-500 hover:bg-wood-950 p-0"
+                onClick={handleLoadMore}
+              >
+                Show More
+              </button>
+            </div>
+          )}
         </section>
       </div>
     </>
