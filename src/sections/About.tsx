@@ -1,12 +1,12 @@
-import { useGitHubUser } from "../features/github";
-import LoadingState from "./ui/LoadingState";
-import ErrorState from "./ui/ErrorState";
+import { useGitHubUser } from "@/features/github";
+import LoadingState from "@/components/ui/LoadingState";
+import ErrorState from "@/components/ui/ErrorState";
 
-interface AboutProps {
+type Props = {
   username: string;
-}
+};
 
-function About({ username }: AboutProps) {
+function About({ username }: Props) {
   const { data: user, isLoading, isError, error } = useGitHubUser(username);
 
   if (isLoading) {
@@ -19,7 +19,7 @@ function About({ username }: AboutProps) {
 
   return (
     <>
-      <div className="mt-9 font-mono uppercase mt-12 mb-6">
+      <div className="font-mono uppercase mt-12 mb-6">
         <div className="text-2xl  text-wood-950 underline decoration-2 decoration-wood-800">
           01. ABOUT
         </div>

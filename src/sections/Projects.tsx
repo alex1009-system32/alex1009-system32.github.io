@@ -1,18 +1,20 @@
 import { useState } from "react";
-import { useGitHubRepos } from "../features/github";
-import LoadingState from "./ui/LoadingState";
-import ErrorState from "./ui/ErrorState";
+import { useGitHubRepos } from "@/features/github";
+import LoadingState from "@/components/ui/LoadingState";
+import ErrorState from "@/components/ui/ErrorState";
 
-interface ProjectProps {
+type Props = {
   username: string;
-}
+};
 
-function Projects({ username }: ProjectProps) {
-  const [visibileCount, setVisibleCount] = useState(3);
+const SEITENGROESSE = 3;
+
+function Projects({ username }: Props) {
+  const [visibleCount, setVisibleCount] = useState(SEITENGROESSE);
   const { data: repos, isLoading, isError, error } = useGitHubRepos(username);
 
   const handleLoadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 3);
+    setVisibleCount((prevCount) => prevCount + SEITENGROESSE);
   };
 
   if (isLoading) {
@@ -36,7 +38,7 @@ function Projects({ username }: ProjectProps) {
       </div>
       <div>
         <section>
-          {repos.slice(0, visibileCount).map((repo) => (
+          {repos.slice(0, visibleCount).map((repo) => (
             <div key={repo.id} className="relative group my-9">
               <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-sand-900 group-hover:bg-wood-950"></div>
               <div className="absolute left-3.25 top-0 w-4 h-4 bg-sand-900 rounded-full group-hover:bg-wood-950"></div>
@@ -69,7 +71,7 @@ function Projects({ username }: ProjectProps) {
               </div>
             </div>
           ))}
-          {visibileCount < repos.length && (
+          {visibleCount < repos.length && (
             <div className="flex justify-center align-middle">
               <button
                 className="text-sm underline hover:text-sand-500 hover:bg-wood-950 p-0"

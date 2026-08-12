@@ -1,16 +1,15 @@
-import { useState } from "react";
-import { useGitHubUser } from "../features/github";
-import LoadingState from "./ui/LoadingState";
-import ErrorState from "./ui/ErrorState";
+import { useGitHubUser } from "@/features/github";
+import LoadingState from "@/components/ui/LoadingState";
+import ErrorState from "@/components/ui/ErrorState";
 
-interface HeaderProps {
+type Props = {
   username: string;
-}
+};
 
-function Header({ username }: HeaderProps) {
-  const [currentDate] = useState(new Date().toLocaleDateString());
-
+function Header({ username }: Props) {
   const { data: user, isLoading, isError, error } = useGitHubUser(username);
+
+  const currentDate = new Date().toLocaleDateString();
 
   if (isLoading) {
     return <LoadingState />;
@@ -19,6 +18,7 @@ function Header({ username }: HeaderProps) {
   if (isError) {
     return <ErrorState error={error} />;
   }
+
   return (
     <>
       <div className="flex justify-between font-mono uppercase">
@@ -42,7 +42,9 @@ function Header({ username }: HeaderProps) {
           <img
             className="max-h-44 m-0 border-2 border-wood-950 outline rotate-3"
             src={user?.img_url}
-            alt={user?.name ? `Profile picture of ${user.name}` : "Profile picture"}
+            alt={
+              user?.name ? `Profile picture of ${user.name}` : "Profile picture"
+            }
           />
         </div>
       </div>

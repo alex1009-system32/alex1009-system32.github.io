@@ -7,6 +7,7 @@ export const useGitHubUser = (username: string) => {
     queryKey: ["githubUser", username],
     queryFn: () => fetchGitHubUser(username),
 
+    staleTime: 1000 * 60 * 5,
     enabled: !!username,
 
     select: (data): User => ({

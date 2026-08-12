@@ -7,6 +7,13 @@
     "types": ["vite/client"],
     "skipLibCheck": true,
 
+    /* Pfad-Alias — muss zu resolve.alias in vite.config.ts passen.
+       Kein baseUrl: seit TS 5 werden paths relativ zur tsconfig aufgeloest,
+       und in TS 6 ist baseUrl deprecated. */
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

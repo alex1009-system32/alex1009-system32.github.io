@@ -1,8 +1,8 @@
-import { GITHUB_USERNAME } from "../lib/config";
-import About from "../components/About";
-import Header from "../components/Header";
-import Skills from "../components/Skills";
-import Projects from "../components/Project";
+import { GITHUB_USERNAME } from "@/lib/config";
+import Header from "@/sections/Header";
+import About from "@/sections/About";
+import Skills from "@/sections/Skills";
+import Projects from "@/sections/Projects";
 
 function App() {
   return (
