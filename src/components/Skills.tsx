@@ -24,7 +24,9 @@ function Skills() {
       <div className="text-wood-900 font-mono">
         <div className="p-5 border border-sand-800 flex flex-wrap">
           {skills.map((skill) => (
-            <div className="m-1 px-3 py-1 border border-wood-900">{skill}</div>
+            <div key={skill} className="m-1 px-3 py-1 border border-wood-900">
+              {skill}
+            </div>
           ))}
         </div>
       </div>

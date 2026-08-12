@@ -21,6 +21,10 @@ function Projects({ username }: ProjectProps) {
     return <div>Error: {error.message}</div>;
   }
 
+  if (!repos) {
+    return null;
+  }
+
   return (
     <>
       <div className="font-mono uppercase mt-12 mb-6">
@@ -30,8 +34,8 @@ function Projects({ username }: ProjectProps) {
       </div>
       <div>
         <section>
-          {repos.slice(0, visibileCount).map((repo: any) => (
-            <div className="relative group my-9">
+          {repos.slice(0, visibileCount).map((repo) => (
+            <div key={repo.id} className="relative group my-9">
               <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-sand-900 group-hover:bg-wood-950"></div>
               <div className="absolute left-3.25 top-0 w-4 h-4 bg-sand-900 rounded-full group-hover:bg-wood-950"></div>
               <div className="pl-9">
@@ -41,7 +45,7 @@ function Projects({ username }: ProjectProps) {
                 <div className="my-3 text-sm text-gravel-500">
                   <p className="my-3">LAST-Updated: {repo.last_updated}</p>
                   <p className="my-3">
-                    STATUS: {repo.archived == true ? "Archivid" : "Live"}
+                    STATUS: {repo.archived ? "Archivid" : "Live"}
                   </p>
                   <p className="my-3">LANGUAGE: {repo.language}</p>
                 </div>
