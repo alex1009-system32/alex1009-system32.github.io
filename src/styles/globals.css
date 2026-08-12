@@ -1,6 +1,6 @@
 /* source(none) schaltet die automatische Quellensuche ab. Ohne das scannt
-   Tailwind v4 das ganze Projekt — auch RESTRUCTURE-PLAN.md und TEST-REPORT.md —
-   und baut Klassennamen aus deren Fließtext als echte Utilities ins Bundle. */
+   Tailwind v4 das ganze Projekt und baut Klassennamen, die irgendwo im
+   Fließtext einer Markdown-Datei stehen, als echte Utilities ins Bundle. */
 @import "tailwindcss" source(none);
 
 @source "../**/*.{ts,tsx}";

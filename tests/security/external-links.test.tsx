@@ -4,10 +4,10 @@ import { renderWithProviders } from "../helpers/render";
 import App from "@/app/App";
 
 /**
- * Sichert die Funde S1 (target="_blank" ohne rel) und B8 (img ohne alt) aus
- * `RESTRUCTURE-PLAN.md` ab. Beide wurden in Umbauschritt 1 bereits behoben —
- * die Tests halten den Fix fest, damit er bei den Schritten 4 und 5, wenn die
- * Komponenten verschoben und umbenannt werden, nicht verloren geht.
+ * Zwei Sicherheits- und Zugänglichkeitsgarantien, die leicht wieder verloren
+ * gehen, wenn Komponenten verschoben oder umgebaut werden:
+ * jeder `target="_blank"`-Link trägt `rel="noopener noreferrer"`, und das
+ * Profilbild hat einen Ersatztext.
  */
 describe("Externe Links", () => {
   it("öffnet Repository-Links in einem neuen Tab", async () => {
