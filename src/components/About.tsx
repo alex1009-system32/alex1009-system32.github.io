@@ -1,4 +1,6 @@
-import { useGitHubUser } from "../services/useGithub";
+import { useGitHubUser } from "../features/github";
+import LoadingState from "./ui/LoadingState";
+import ErrorState from "./ui/ErrorState";
 
 interface AboutProps {
   username: string;
@@ -8,11 +10,11 @@ function About({ username }: AboutProps) {
   const { data: user, isLoading, isError, error } = useGitHubUser(username);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingState />;
   }
 
   if (isError) {
-    return <div>Error: {error.message}</div>;
+    return <ErrorState error={error} />;
   }
 
   return (

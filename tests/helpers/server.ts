@@ -2,9 +2,9 @@ import { http, HttpResponse, delay } from "msw";
 import { setupServer } from "msw/node";
 
 /**
- * Der Nutzername ist heute in `src/App.tsx` hartkodiert. Die Handler binden sich
- * bewusst auf `:username`, damit sie auch nach Umbauschritt 4 tragen, wenn der
- * Wert in `lib/config.ts` wandert.
+ * Die Handler binden sich auf `:username` statt auf einen festen Namen — deshalb
+ * tragen sie unverändert weiter, seit der Wert in Schritt 4 von `src/App.tsx` nach
+ * `src/lib/config.ts` gewandert ist.
  */
 export const USER_ENDPOINT = "https://api.github.com/users/:username";
 export const REPOS_ENDPOINT = "https://api.github.com/users/:username/repos";

@@ -6,9 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
  * Frischer Query-Client pro Test: kein Cache-Leck zwischen Tests, keine Retries
  * (sonst wartet der Fehlerfall auf drei Wiederholungen).
  *
- * Umbau-Notiz: Sobald Schritt 4 die Provider-Kette nach `src/app/providers.tsx`
- * zieht, sollte dieser Helper stattdessen jene Komponente verwenden — dann testet
- * das Netz die echte Provider-Konfiguration statt einer Nachbildung.
+ * Umbau-Notiz (Schritt 4 erledigt): `src/app/providers.tsx` existiert jetzt, wird
+ * hier aber bewusst NICHT verwendet — dort lebt ein Query-Client als Modul-Singleton,
+ * über den Cache und Fehlerzustände zwischen Tests lecken würden.
  */
 function createTestQueryClient() {
   return new QueryClient({

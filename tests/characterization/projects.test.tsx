@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "../helpers/render";
-import App from "../../src/App";
+import App from "../../src/app/App";
 
 /**
  * Die Projektliste ist der einzige interaktive Teil der Seite und zugleich der

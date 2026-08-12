@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import { renderWithProviders } from "../helpers/render";
 import { failAllRequests, server, stallAllRequests } from "../helpers/server";
-import App from "../../src/App";
+import App from "../../src/app/App";
 
 /**
  * Characterization Tests: sie halten fest, was die Seite HEUTE tut — inklusive

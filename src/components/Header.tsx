@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useGitHubUser } from "../services/useGithub";
+import { useGitHubUser } from "../features/github";
+import LoadingState from "./ui/LoadingState";
+import ErrorState from "./ui/ErrorState";
 
 interface HeaderProps {
   username: string;
@@ -11,11 +13,11 @@ function Header({ username }: HeaderProps) {
   const { data: user, isLoading, isError, error } = useGitHubUser(username);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingState />;
   }
 
   if (isError) {
-    return <div>Error: {error.message}</div>;
+    return <ErrorState error={error} />;
   }
   return (
     <>

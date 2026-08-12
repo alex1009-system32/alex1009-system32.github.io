@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useGitHubRepo } from "../services/useGithub";
+import { useGitHubRepos } from "../features/github";
+import LoadingState from "./ui/LoadingState";
+import ErrorState from "./ui/ErrorState";
 
 interface ProjectProps {
   username: string;
@@ -7,18 +9,18 @@ interface ProjectProps {
 
 function Projects({ username }: ProjectProps) {
   const [visibileCount, setVisibleCount] = useState(3);
-  const { data: repos, isLoading, isError, error } = useGitHubRepo(username);
+  const { data: repos, isLoading, isError, error } = useGitHubRepos(username);
 
   const handleLoadMore = () => {
     setVisibleCount((prevCount) => prevCount + 3);
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingState />;
   }
 
   if (isError) {
-    return <div>Error: {error.message}</div>;
+    return <ErrorState error={error} />;
   }
 
   if (!repos) {

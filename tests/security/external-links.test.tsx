@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { screen } from "@testing-library/react";
 import { renderWithProviders } from "../helpers/render";
-import App from "../../src/App";
+import App from "../../src/app/App";
 
 /**
  * Sichert die Funde S1 (target="_blank" ohne rel) und B8 (img ohne alt) aus
