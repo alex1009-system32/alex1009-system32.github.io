@@ -35,7 +35,7 @@ function Header({ username }: Props) {
             {user?.name}
           </div>
           <div className="m-3 text-2xl text-wood-800 selection:bg-wood-800">
-            Working on Private Porjects
+            Working on Private Projects
           </div>
         </div>
         <div>

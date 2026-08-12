@@ -33,7 +33,7 @@ function Projects({ username }: Props) {
     <>
       <div className="font-mono uppercase mt-12 mb-6">
         <div className="text-2xl  text-wood-950 underline decoration-2 decoration-wood-800">
-          02. Projects
+          03. Projects
         </div>
       </div>
       <div>
@@ -49,7 +49,7 @@ function Projects({ username }: Props) {
                 <div className="my-3 text-sm text-gravel-500">
                   <p className="my-3">LAST-Updated: {repo.last_updated}</p>
                   <p className="my-3">
-                    STATUS: {repo.archived ? "Archivid" : "Live"}
+                    STATUS: {repo.archived ? "Archived" : "Live"}
                   </p>
                   <p className="my-3">LANGUAGE: {repo.language}</p>
                 </div>
@@ -65,7 +65,7 @@ function Projects({ username }: Props) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {">>"} COURCE CODE
+                    {">>"} SOURCE CODE
                   </a>
                 </div>
               </div>

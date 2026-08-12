@@ -14,7 +14,7 @@ describe("Externe Links", () => {
     renderWithProviders(<App />);
 
     const links = await screen.findAllByRole("link", {
-      name: ">> COURCE CODE",
+      name: ">> SOURCE CODE",
     });
     for (const link of links) {
       expect(link).toHaveAttribute("target", "_blank");
@@ -24,7 +24,7 @@ describe("Externe Links", () => {
   it("entkoppelt jeden Link mit target='_blank' über rel='noopener noreferrer'", async () => {
     renderWithProviders(<App />);
 
-    await screen.findAllByRole("link", { name: ">> COURCE CODE" });
+    await screen.findAllByRole("link", { name: ">> SOURCE CODE" });
 
     const blankLinks = screen
       .getAllByRole("link")

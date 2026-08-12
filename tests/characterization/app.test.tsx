@@ -5,11 +5,13 @@ import { failAllRequests, server, stallAllRequests } from "../helpers/server";
 import App from "@/app/App";
 
 /**
- * Characterization Tests: sie halten fest, was die Seite HEUTE tut — inklusive
- * der Tippfehler im sichtbaren Text ("Porjects", "COURCE CODE", "Archivid") und
- * der doppelt vergebenen Abschnittsnummer "02.". Das ist Absicht: Umbauschritt 7
- * würde genau diese Texte korrigieren, und dann sollen die Tests anschlagen,
- * damit die Änderung eine bewusste Entscheidung ist.
+ * Characterization Tests: sie halten fest, was die Seite tut.
+ *
+ * Bis Umbauschritt 6 hielten sie bewusst auch die Tippfehler im sichtbaren Text
+ * fest ("Porjects", "COURCE CODE", "Archivid") sowie die doppelt vergebene
+ * Abschnittsnummer "02.". Schritt 7 hat genau diese Texte korrigiert — die Tests
+ * sind dabei angeschlagen und wurden mit der Korrektur nachgezogen. Genau dafür
+ * waren sie da.
  */
 describe("Portfolio-Seite — geladener Zustand", () => {
   it("zeigt Name, Ort und Tagline im Kopfbereich", async () => {
@@ -17,7 +19,7 @@ describe("Portfolio-Seite — geladener Zustand", () => {
 
     expect(await screen.findByText("Test User")).toBeVisible();
     expect(screen.getByText(/^Loc: Innsbruck$/)).toBeVisible();
-    expect(screen.getByText("Working on Private Porjects")).toBeVisible();
+    expect(screen.getByText("Working on Private Projects")).toBeVisible();
   });
 
   it("zeigt das aktuelle Datum in der Kopfzeile", async () => {
@@ -74,12 +76,12 @@ describe("Portfolio-Seite — geladener Zustand", () => {
     expect(sichtbar).toEqual(erwartet);
   });
 
-  it("zeigt den Projektabschnitt unter der Nummer 02 (heute doppelt vergeben)", async () => {
+  it("nummeriert die Abschnitte fortlaufend", async () => {
     renderWithProviders(<App />);
 
-    expect(await screen.findByText("02. Projects")).toBeVisible();
-    // "02. SKILLS" trägt dieselbe Nummer — der Ist-Zustand, den Schritt 7 korrigieren würde.
+    expect(await screen.findByText("01. ABOUT")).toBeVisible();
     expect(screen.getByText("02. SKILLS")).toBeVisible();
+    expect(screen.getByText("03. Projects")).toBeVisible();
   });
 });
 
@@ -123,7 +125,7 @@ describe("Portfolio-Seite — Fehlerzustand", () => {
     renderWithProviders(<App />);
 
     await screen.findAllByText("Error: Not Found");
-    expect(screen.queryByText("Working on Private Porjects")).toBeNull();
+    expect(screen.queryByText("Working on Private Projects")).toBeNull();
     expect(screen.queryByRole("img")).toBeNull();
   });
 });

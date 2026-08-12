@@ -5,10 +5,9 @@ import { renderWithProviders } from "../helpers/render";
 import App from "@/app/App";
 
 /**
- * Die Projektliste ist der einzige interaktive Teil der Seite und zugleich der
- * Ort, an dem heute das `key`-Prop fehlt (Umbauschritt 3). Das Nachladen über
- * "Show More" ist deshalb der Test, der nach dem Fix beweisen muss, dass die
- * Liste unverändert rekonziliert.
+ * Die Projektliste ist der einzige interaktive Teil der Seite und war der Ort,
+ * an dem das `key`-Prop fehlte (Umbauschritt 3). Das Nachladen über "Show More"
+ * ist deshalb der Test, der beweist, dass die Liste unverändert rekonziliert.
  */
 describe("Projektliste", () => {
   it("zeigt zunächst nur die ersten drei Repositories", async () => {
@@ -56,13 +55,13 @@ describe("Projektliste", () => {
 
     // Von den drei initial sichtbaren Repos sind zwei aktiv und eines archiviert.
     expect(screen.getAllByText("STATUS: Live")).toHaveLength(2);
-    expect(screen.getAllByText("STATUS: Archivid")).toHaveLength(1);
+    expect(screen.getAllByText("STATUS: Archived")).toHaveLength(1);
   });
 
-  it("kennzeichnet archivierte Repositories als 'Archivid'", async () => {
+  it("kennzeichnet archivierte Repositories als 'Archived'", async () => {
     renderWithProviders(<App />);
 
-    expect(await screen.findByText("STATUS: Archivid")).toBeVisible();
+    expect(await screen.findByText("STATUS: Archived")).toBeVisible();
   });
 
   it("setzt 'Mixed' ein, wenn die API keine Sprache liefert", async () => {
@@ -78,11 +77,11 @@ describe("Projektliste", () => {
     expect(screen.getByText("Erstes Repository")).toBeVisible();
   });
 
-  it("verlinkt jedes Repository unter dem Label '>> COURCE CODE'", async () => {
+  it("verlinkt jedes Repository unter dem Label '>> SOURCE CODE'", async () => {
     renderWithProviders(<App />);
 
     const links = await screen.findAllByRole("link", {
-      name: ">> COURCE CODE",
+      name: ">> SOURCE CODE",
     });
     expect(links).toHaveLength(3);
     expect(links[0]).toHaveAttribute(
