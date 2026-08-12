@@ -1,5 +1,12 @@
 # Restructure Plan — my-portfolio (alex1009-system32.github.io)
-_Stand: 2026-08-12 · Analyse read-only, noch nichts am Produktivcode geändert_
+_Analyse: 2026-08-12 · **Schritte 1–5 umgesetzt am 2026-08-12**, Schritte 6–7 offen_
+
+> **Stand der Umsetzung**
+> Freigegeben und erledigt waren die Schritte 1–5 — alle ohne sichtbare Änderung an
+> der Seite. Belegt durch den über die Schritte 3, 4 und 5 hinweg **unveränderten
+> CSS-Bundle-Hash** (`index-BZrEso5m.css`) und 21 grüne Tests.
+> Offen bleiben die Schritte 6 (Styling-Fehlgriffe) und 7 (Textkorrekturen); beide
+> ändern das Aussehen bzw. den Text der Seite und brauchen je eine Entscheidung.
 
 ## Kurzfassung
 
@@ -159,15 +166,15 @@ Verbindlich nach dem Umbau, abgeleitet aus dem, was das Projekt schon überwiege
 Reihenfolge: Security-Hygiene → Sicherheitsnetz → Korrektheit → Schichtung → Konsistenz
 → tote Elemente → sichtbare Textkorrekturen. Nach jedem Schritt bleibt die App lauffähig.
 
-| # | Ziel | Dateien | Verhaltensänderung | Prüfung |
-|---|------|---------|--------------------|---------|
-| 1 | Security-Hygiene: `rel="noopener noreferrer"` (S1), `alt`-Attribut (B8), `.env` in `.gitignore` (S6), `npm ci` im Workflow (S3), `npm audit fix` für devDeps (S2) | `Project.tsx`, `Header.tsx`, `.gitignore`, `deploy.yml`, `package-lock.json` | **nein** (`alt` ist neu für Screenreader, optisch identisch) | `tsc -b`, `vite build`, `npm audit` |
-| 2 | Sicherheitsnetz: Vitest + Testing Library aufsetzen, Characterization Tests schreiben (Phase 3) | `package.json`, `vite.config.ts`, `tests/` | nein | Baseline über Test-Skill, muss grün sein |
-| 3 | Korrektheit: `strict: true` (B2), `key`-Props (B1), API-Typen statt `any` (B3, A2), `===` (B4) | `tsconfig.app.json`, `tsconfig.node.json`, `Skills.tsx`, `Project.tsx`, `useGithub.ts` | **nein** (`key` behebt eine latente Rekonziliations-Macke beim „Show More") | `tsc -b`, **`npm run lint` wird grün**, Tests aus Schritt 2 |
-| 4 | Schichtung: `features/github/` mit `api`/`hooks`/`types`/`index.ts`, `lib/config.ts` für `username` (A1, A2, A3), `QueryState`-Komponente gegen den dreifach kopierten Lade-/Fehlerblock (A5, R5) | `src/services/*` → `src/features/github/*`, `src/components/ui/QueryState.tsx`, `App.tsx` | **zu klären** — ein gemeinsames Lade-/Fehlermuster ersetzt drei separate „Loading…"-Zeilen durch eine. Optisch sichtbar, siehe Risiken | `tsc -b`, `vite build`, Tests |
-| 5 | Konsistenz: Alias `@/` (K3), Umbenennungen `Project.tsx`→`Projects.tsx`, `useGithub`→Feature-Hooks (K1, K2), CSS-Import in `main.tsx` (K5), Import-Reihenfolge (K6), Props-Konvention (K7), ESLint `ecmaVersion` (K8), tote Root-`compilerOptions` entfernen (R7), `staleTime` vereinheitlichen (K4), `visibileCount` (B7), `mt-9`/`mt-12` (B9), `skills`-Sortierung aus dem Render heraus (B10), `useState` fürs Datum auflösen (A4) | alle Quelldateien, `index.html`, `eslint.config.js`, `tsconfig.*`, `vite.config.ts` | **nein** | `tsc -b`, `vite build`, `npm run lint`, Tests |
-| 6 | Tote Elemente & Styling-Fehlgriffe: `tailwind.config.ts` (R1), fehlende Farben im `@theme` (R2), `bg-[url(…)]` (R3), Favicon verlinken oder Assets löschen (R4), README neu (R6) | `tailwind.config.ts`, `globals.css`, `App.tsx`, `Skills.tsx`, `About.tsx`, `index.html`, `README.md` | **ja** — siehe Risiken. Hier wird die Seite sichtbar anders | `vite build` + CSS-Bundle prüfen, Sichtprüfung |
-| 7 | Sichtbare Textkorrekturen: „Porjects", „COURCE CODE", „Archivid" (B6), „02." → „03." (B5) | `Header.tsx`, `Project.tsx` | **ja** — geänderter Text auf der Seite | Sichtprüfung, Tests anpassen |
+| # | Status | Ziel | Dateien | Verhaltensänderung | Prüfung |
+|---|--------|------|---------|--------------------|---------|
+| 1 | ✅ `9dac13d` | Security-Hygiene: `rel="noopener noreferrer"` (S1), `alt`-Attribut (B8), `.env` in `.gitignore` (S6), `npm ci` im Workflow (S3), `npm audit fix` für devDeps (S2) | `Project.tsx`, `Header.tsx`, `.gitignore`, `deploy.yml`, `package-lock.json` | **nein** (`alt` ist neu für Screenreader, optisch identisch) | `tsc -b`, `vite build`, `npm audit` |
+| 2 | ✅ `cb02dd6` | Sicherheitsnetz: Vitest + Testing Library aufsetzen, Characterization Tests schreiben (Phase 3) | `package.json`, `vite.config.ts`, `tests/` | nein | Baseline über Test-Skill, muss grün sein |
+| 3 | ✅ `b4de3ac` | Korrektheit: `strict: true` (B2), `key`-Props (B1), API-Typen statt `any` (B3, A2), `===` (B4) | `tsconfig.app.json`, `tsconfig.node.json`, `Skills.tsx`, `Project.tsx`, `useGithub.ts` | **nein** (`key` behebt eine latente Rekonziliations-Macke beim „Show More") | `tsc -b`, **`npm run lint` wird grün**, Tests aus Schritt 2 |
+| 4 | ✅ `b019dba` | Schichtung: `features/github/` mit `api`/`hooks`/`types`/`index.ts`, `lib/config.ts` für `username` (A1, A2, A3), `QueryState`-Komponente gegen den dreifach kopierten Lade-/Fehlerblock (A5, R5) | `src/services/*` → `src/features/github/*`, `src/components/ui/QueryState.tsx`, `App.tsx` | **nein** (entschieden) — die Abschnitte kehren weiterhin einzeln früh zurück, es wird nur das kopierte Markup zusammengefasst. Drei Ladehinweise bleiben drei, per Test abgesichert | `tsc -b`, `vite build`, Tests |
+| 5 | ✅ `fc5b1b4` | Konsistenz: Alias `@/` (K3), Umbenennungen `Project.tsx`→`Projects.tsx`, `useGithub`→Feature-Hooks (K1, K2), CSS-Import in `main.tsx` (K5), Import-Reihenfolge (K6), Props-Konvention (K7), ESLint `ecmaVersion` (K8), tote Root-`compilerOptions` entfernen (R7), `staleTime` vereinheitlichen (K4), `visibileCount` (B7), `mt-9`/`mt-12` (B9), `skills`-Sortierung aus dem Render heraus (B10), `useState` fürs Datum auflösen (A4) | alle Quelldateien, `index.html`, `eslint.config.js`, `tsconfig.*`, `vite.config.ts` | **nein** | `tsc -b`, `vite build`, `npm run lint`, Tests |
+| 6 | ⬜ offen | Tote Elemente & Styling-Fehlgriffe: `tailwind.config.ts` (R1), fehlende Farben im `@theme` (R2), `bg-[url(…)]` (R3), Favicon verlinken oder Assets löschen (R4), README neu (R6) | `tailwind.config.ts`, `globals.css`, `App.tsx`, `Skills.tsx`, `About.tsx`, `index.html`, `README.md` | **ja** — siehe Risiken. Hier wird die Seite sichtbar anders | `vite build` + CSS-Bundle prüfen, Sichtprüfung |
+| 7 | ⬜ offen | Sichtbare Textkorrekturen: „Porjects", „COURCE CODE", „Archivid" (B6), „02." → „03." (B5) | `Header.tsx`, `Project.tsx` | **ja** — geänderter Text auf der Seite | Sichtprüfung, Tests anpassen |
 
 ## Bewusst nicht angefasst
 
@@ -217,10 +224,58 @@ ohne deine Freigabe. Jeder Schritt ist einzeln über `git revert` zurücknehmbar
 
 ## Freigabe
 
-Nichts davon startet ohne deine Entscheidung. Sinnvolle Zuschnitte:
+Freigegeben wurden die **Schritte 1–5** (der strukturelle Umbau ohne sichtbare
+Änderungen) inklusive Testnetz. Die Schritte 6 und 7 sind offen — für Schritt 6 braucht
+es zu jedem der vier Styling-Punkte eine Entscheidung: reparieren oder tote Deklaration
+entfernen.
 
-- **Nur Schritt 1 + 3** — Security-Hygiene und Korrektheit, Lint wird grün, optisch
-  ändert sich nichts.
-- **Schritte 1–5** — der ganze strukturelle Umbau ohne sichtbare Änderungen.
-- **Alles inklusive 6 + 7** — dann brauche ich zu den vier Styling-Punkten aus den
-  Risiken je eine Entscheidung: reparieren oder entfernen.
+---
+
+## Abschluss der Schritte 1–5
+
+_2026-08-12_
+
+### Abgleich Plan ↔ Umsetzung
+
+| Schritt | Ergebnis |
+|---|---|
+| 1 Security-Hygiene | erledigt. `npm audit` von 6 Findings (5 hoch) auf **0** |
+| 2 Testnetz | erledigt. Vitest + Testing Library + MSW, 21 Tests, Baseline grün |
+| 3 Korrektheit | erledigt. `npm run lint` von 2 Fehlern auf **grün**; `strict: true` deckte **keinen** verborgenen Typfehler auf |
+| 4 Schichtung | erledigt. Der als *zu klären* markierte Punkt wurde zugunsten „keine sichtbare Änderung" entschieden |
+| 5 Konsistenz | erledigt. Abweichung vom Plan: `baseUrl` beim Alias entfällt — in TypeScript 6 deprecated, bricht sonst den Build |
+| 6 Tote Elemente & Styling | **offen** — ändert das Aussehen, braucht vier Einzelentscheidungen |
+| 7 Textkorrekturen | **offen** — ändert sichtbaren Text |
+
+**Vorgezogen aus Schritt 5:** Die in Schritt 4 neu angelegten Hook-Dateien tragen direkt
+die Zielnamen (`useGitHubUser`, `useGitHubRepos`), statt erst unter dem alten Namen
+angelegt und dann umbenannt zu werden.
+
+### Verifikation
+
+- `tsc -b --force`, `npm run lint`, `npm run build`, `npm audit` — alle ohne Befund
+- 21/21 Tests grün, über fünf Läufe stabil, keine `act`-Warnungen
+- **CSS-Bundle-Hash über die Schritte 3, 4 und 5 unverändert** (`index-BZrEso5m.css`) —
+  der Beleg, dass am Styling nichts passiert ist
+- Bundle-Abgleich: keine Secret-Muster, keine Sourcemaps, als externe Hosts nur
+  `api.github.com`, die Fehlermeldungs-URLs der Libraries und der SVG-Namespace.
+  Größe praktisch unverändert (JS 229,51 → 229,53 kB; CSS 11,12 → 11,49 kB)
+- Klickdurchlauf im echten Chromium gegen das Produktions-Bundle (API im Browser
+  gestubbt): Seite lädt, „Show More" erweitert von 3 auf 5 Einträge, Button verschwindet,
+  keine React-Warnungen
+
+### Übergabe-Notiz (für README oder CONTRIBUTING.md)
+
+> **Ordnerlogik.** `app/` hält Einstieg, Provider-Kette und Seitengerüst. `features/<name>/`
+> enthält alles Fachliche einer Datenquelle — `api/`, `hooks/`, `types.ts` — und wird
+> ausschließlich über sein `index.ts` benutzt, nie über interne Pfade. `sections/` sind
+> die sichtbaren Abschnitte der Seite, `components/ui/` die generischen Bausteine ohne
+> Fachwissen, `lib/` die Konfiguration. Abhängigkeiten laufen nur abwärts:
+> `sections → features → lib`.
+>
+> **Dateikonventionen.** Komponentendateien `PascalCase.tsx` mit einem Default-Export,
+> der so heißt wie die Datei; alles andere `camelCase.ts`. Props immer explizit als
+> `type Props = { … }`. Reihenfolge in der Datei: Imports → Typen → Komponente → Hooks →
+> abgeleitete Werte → Handler → Return. Importe über den Alias `@/`, nie über `../../`.
+>
+> **Vor dem Commit:** `npm run lint && npm test && npm run build`.
