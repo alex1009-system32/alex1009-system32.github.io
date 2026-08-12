@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { renderWithProviders } from "../helpers/render";
 import { failAllRequests, server, stallAllRequests } from "../helpers/server";
 import App from "../../src/App";
@@ -40,9 +40,10 @@ describe("Portfolio-Seite — geladener Zustand", () => {
     renderWithProviders(<App />);
 
     expect(await screen.findByText("01. ABOUT")).toBeVisible();
-    expect(
-      screen.getByText(/^MISSION: Building things in the open$/),
-    ).toBeVisible();
+    // Das Label steht in einem eigenen <span>, die Bio als Textknoten daneben —
+    // deshalb werden beide einzeln geprueft statt als ein zusammenhaengender Text.
+    expect(screen.getByText("MISSION:")).toBeVisible();
+    expect(screen.getByText("Building things in the open")).toBeVisible();
   });
 
   it("zeigt alle Skills alphabetisch sortiert", async () => {
@@ -107,10 +108,14 @@ describe("Portfolio-Seite — Fehlerzustand", () => {
     server.use(...failAllRequests("API rate limit exceeded"));
     renderWithProviders(<App />);
 
-    const fehler = await screen.findAllByText(
-      "Error: API rate limit exceeded",
-    );
-    expect(fehler).toHaveLength(3);
+    // Der User- und der Repo-Query scheitern unabhaengig voneinander. findAllByText
+    // wuerde beim ersten Treffer aufloesen und den Zwischenstand mit zwei Bloecken
+    // sehen — deshalb wird auf den Endzustand gewartet.
+    await waitFor(() => {
+      expect(
+        screen.getAllByText("Error: API rate limit exceeded"),
+      ).toHaveLength(3);
+    });
   });
 
   it("blendet den Kopfbereich bei einem Fehler vollständig aus", async () => {

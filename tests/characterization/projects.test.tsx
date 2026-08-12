@@ -52,8 +52,11 @@ describe("Projektliste", () => {
     expect(
       await screen.findByText("LAST-Updated: 2026-01-15T10:00:00Z"),
     ).toBeVisible();
-    expect(screen.getByText("STATUS: Live")).toBeVisible();
     expect(screen.getByText("LANGUAGE: TypeScript")).toBeVisible();
+
+    // Von den drei initial sichtbaren Repos sind zwei aktiv und eines archiviert.
+    expect(screen.getAllByText("STATUS: Live")).toHaveLength(2);
+    expect(screen.getAllByText("STATUS: Archivid")).toHaveLength(1);
   });
 
   it("kennzeichnet archivierte Repositories als 'Archivid'", async () => {

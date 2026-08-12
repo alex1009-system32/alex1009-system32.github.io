@@ -11,7 +11,10 @@
   },
   "baseline": {
     "commit": "9dac13d",
-    "status": "offen"
+    "status": "gruen",
+    "geprueftAm": "2026-08-12",
+    "ergebnis": "21 von 21 Tests gruen, ueber fuenf Laeufe stabil. Keine act-Warnungen, keine unbehandelten Promise-Rejections.",
+    "notiz": "Der erste Lauf war rot (3 von 21). Alle drei Fehlschlaege waren Testdefekte, kein Produktivcode-Bug: (1) getByText matcht nur direkte Text-Kindknoten, nicht textContent - die Regex auf 'MISSION: <bio>' konnte nie greifen, weil das Label in einem span steht; (2) findAllByText loest beim ersten Treffer auf und sah im Fehlerfall den Zwischenstand mit 2 statt 3 Bloecken - ersetzt durch waitFor; (3) die Fixture enthaelt unter den ersten drei Repos zwei nicht-archivierte, 'STATUS: Live' kommt also zweimal vor. Alle drei Korrekturen praezisieren die Assertions, keine wurde abgeschwaecht."
   },
   "tests": [
     {
