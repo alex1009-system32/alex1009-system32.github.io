@@ -55,6 +55,7 @@ function Projects({ username }: ProjectProps) {
                     className="text-sm underline hover:text-sand-500 hover:bg-wood-950 p-0"
                     href={repo.project_url}
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     {">>"} COURCE CODE
                   </a>
