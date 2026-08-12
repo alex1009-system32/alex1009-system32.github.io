@@ -1,12 +1,11 @@
 # Restructure Plan — my-portfolio (alex1009-system32.github.io)
-_Analyse: 2026-08-12 · **Schritte 1–5 umgesetzt am 2026-08-12**, Schritte 6–7 offen_
+_Analyse: 2026-08-12 · **alle Schritte 1–7 umgesetzt am 2026-08-12**_
 
-> **Stand der Umsetzung**
-> Freigegeben und erledigt waren die Schritte 1–5 — alle ohne sichtbare Änderung an
-> der Seite. Belegt durch den über die Schritte 3, 4 und 5 hinweg **unveränderten
-> CSS-Bundle-Hash** (`index-BZrEso5m.css`) und 21 grüne Tests.
-> Offen bleiben die Schritte 6 (Styling-Fehlgriffe) und 7 (Textkorrekturen); beide
-> ändern das Aussehen bzw. den Text der Seite und brauchen je eine Entscheidung.
+> **Stand der Umsetzung — abgeschlossen**
+> Die Schritte 1–5 liefen ohne jede sichtbare Änderung; belegt durch den über die
+> Schritte 3, 4 und 5 hinweg **unveränderten CSS-Bundle-Hash** (`index-BZrEso5m.css`).
+> Die Schritte 6 und 7 wurden anschließend einzeln entschieden und umgesetzt — sie
+> ändern das Aussehen und den Text der Seite bewusst. 21 Tests grün.
 
 ## Kurzfassung
 
@@ -173,8 +172,8 @@ Reihenfolge: Security-Hygiene → Sicherheitsnetz → Korrektheit → Schichtung
 | 3 | ✅ `b4de3ac` | Korrektheit: `strict: true` (B2), `key`-Props (B1), API-Typen statt `any` (B3, A2), `===` (B4) | `tsconfig.app.json`, `tsconfig.node.json`, `Skills.tsx`, `Project.tsx`, `useGithub.ts` | **nein** (`key` behebt eine latente Rekonziliations-Macke beim „Show More") | `tsc -b`, **`npm run lint` wird grün**, Tests aus Schritt 2 |
 | 4 | ✅ `b019dba` | Schichtung: `features/github/` mit `api`/`hooks`/`types`/`index.ts`, `lib/config.ts` für `username` (A1, A2, A3), `QueryState`-Komponente gegen den dreifach kopierten Lade-/Fehlerblock (A5, R5) | `src/services/*` → `src/features/github/*`, `src/components/ui/QueryState.tsx`, `App.tsx` | **nein** (entschieden) — die Abschnitte kehren weiterhin einzeln früh zurück, es wird nur das kopierte Markup zusammengefasst. Drei Ladehinweise bleiben drei, per Test abgesichert | `tsc -b`, `vite build`, Tests |
 | 5 | ✅ `fc5b1b4` | Konsistenz: Alias `@/` (K3), Umbenennungen `Project.tsx`→`Projects.tsx`, `useGithub`→Feature-Hooks (K1, K2), CSS-Import in `main.tsx` (K5), Import-Reihenfolge (K6), Props-Konvention (K7), ESLint `ecmaVersion` (K8), tote Root-`compilerOptions` entfernen (R7), `staleTime` vereinheitlichen (K4), `visibileCount` (B7), `mt-9`/`mt-12` (B9), `skills`-Sortierung aus dem Render heraus (B10), `useState` fürs Datum auflösen (A4) | alle Quelldateien, `index.html`, `eslint.config.js`, `tsconfig.*`, `vite.config.ts` | **nein** | `tsc -b`, `vite build`, `npm run lint`, Tests |
-| 6 | ⬜ offen | Tote Elemente & Styling-Fehlgriffe: `tailwind.config.ts` (R1), fehlende Farben im `@theme` (R2), `bg-[url(…)]` (R3), Favicon verlinken oder Assets löschen (R4), README neu (R6) | `tailwind.config.ts`, `globals.css`, `App.tsx`, `Skills.tsx`, `About.tsx`, `index.html`, `README.md` | **ja** — siehe Risiken. Hier wird die Seite sichtbar anders | `vite build` + CSS-Bundle prüfen, Sichtprüfung |
-| 7 | ⬜ offen | Sichtbare Textkorrekturen: „Porjects", „COURCE CODE", „Archivid" (B6), „02." → „03." (B5) | `Header.tsx`, `Project.tsx` | **ja** — geänderter Text auf der Seite | Sichtprüfung, Tests anpassen |
+| 6 | ✅ `ca441cd` | Tote Elemente & Styling-Fehlgriffe: `tailwind.config.ts` (R1), fehlende Farben im `@theme` (R2), `bg-[url(…)]` (R3), Favicon verlinken oder Assets löschen (R4), README neu (R6) | `tailwind.config.ts`, `globals.css`, `App.tsx`, `Skills.tsx`, `About.tsx`, `index.html`, `README.md` | **ja** — siehe Risiken. Hier wird die Seite sichtbar anders | `vite build` + CSS-Bundle prüfen, Sichtprüfung |
+| 7 | ✅ `87fb4b4` | Sichtbare Textkorrekturen: „Porjects", „COURCE CODE", „Archivid" (B6), „02." → „03." (B5) | `Header.tsx`, `Project.tsx` | **ja** — geänderter Text auf der Seite | Sichtprüfung, Tests anpassen |
 
 ## Bewusst nicht angefasst
 
@@ -244,8 +243,8 @@ _2026-08-12_
 | 3 Korrektheit | erledigt. `npm run lint` von 2 Fehlern auf **grün**; `strict: true` deckte **keinen** verborgenen Typfehler auf |
 | 4 Schichtung | erledigt. Der als *zu klären* markierte Punkt wurde zugunsten „keine sichtbare Änderung" entschieden |
 | 5 Konsistenz | erledigt. Abweichung vom Plan: `baseUrl` beim Alias entfällt — in TypeScript 6 deprecated, bricht sonst den Build |
-| 6 Tote Elemente & Styling | **offen** — ändert das Aussehen, braucht vier Einzelentscheidungen |
-| 7 Textkorrekturen | **offen** — ändert sichtbaren Text |
+| 6 Tote Elemente & Styling | erledigt. Vier Einzelentscheidungen, siehe unten. CSS 11,49 → **9,59 kB** |
+| 7 Textkorrekturen | erledigt. Sieben Tests schlugen erwartungsgemäß an und wurden nachgezogen |
 
 **Vorgezogen aus Schritt 5:** Die in Schritt 4 neu angelegten Hook-Dateien tragen direkt
 die Zielnamen (`useGitHubUser`, `useGitHubRepos`), statt erst unter dem alten Namen
@@ -279,3 +278,55 @@ angelegt und dann umbenannt zu werden.
 > abgeleitete Werte → Handler → Return. Importe über den Alias `@/`, nie über `../../`.
 >
 > **Vor dem Commit:** `npm run lint && npm test && npm run build`.
+
+
+## Nachtrag: Schritte 6 und 7
+
+_2026-08-12_
+
+### Getroffene Entscheidungen (Schritt 6)
+
+| Fund | Entscheidung | Folge |
+|---|---|---|
+| R1 Schriften | `tailwind.config.ts` **gelöscht**, Standard-Monospace behalten | Keine sichtbare Änderung. Die Datei war seit dem Wechsel auf Tailwind v4 wirkungslos und täuschte eine Konfiguration vor, die nie griff |
+| R2 Farben | `wood-900` und `sand-800` im `@theme` **ergänzt** | Sichtbar: Text im ABOUT- und SKILLS-Abschnitt sowie zwei Rahmen erscheinen jetzt in der gemeinten Farbe statt in der geerbten |
+| R3 Textur | `bg-[url(…)]` **korrigiert, extern geladen** | Sichtbar: Die Seite lädt bei jedem Besuch ein Bild von `transparenttextures.com`. Damit hängt die Darstellung an einem fremden Host |
+| R4 Favicon | `favicon.svg` **verlinkt** | Der bisherige 404 auf `/favicon.ico` entfällt. `public/icons.svg` bleibt ungenutzt liegen — dazu steht eine Entscheidung aus |
+
+### Neuer Befund während der Umsetzung (nicht aus der Analyse)
+
+**Tailwind v4 scannte das gesamte Projekt**, einschließlich `RESTRUCTURE-PLAN.md` und
+`TEST-REPORT.md`, und baute Klassennamen aus deren Fließtext als echte Utilities ins
+Bundle — darunter ausgerechnet die in diesem Dokument beschriebene kaputte Regel
+`background-color://…png`. Der Befund entstand erst durch die Dokumentationsdateien
+dieses Umbaus, war also selbst eingeschleppt und wurde deshalb direkt behoben:
+`@import "tailwindcss" source(none)` plus explizite `@source`-Einträge für `src/` und
+`index.html`.
+
+Ergebnis: **CSS von 11,49 auf 9,59 kB** (−17 %). Gegengeprüft, dass dabei nichts
+Benötigtes verlorenging — alle **75** im Quellcode verwendeten Klassen sind weiterhin
+im Bundle.
+
+### Verifikation
+
+- `tsc -b`, `npm run lint`, `npm run build`, `npm audit`: ohne Befund
+- 21/21 Tests grün. Schritt 7 machte zunächst **7 Tests rot** — genau die, die die
+  alten Texte festhielten. Das Sicherheitsnetz hat also gegriffen; Erwartungen und
+  Manifest wurden mit der Korrektur nachgezogen
+- Klickdurchlauf im echten Chromium: Texte korrekt, Nummerierung fortlaufend
+  (01/02/03), „Show More" erweitert weiterhin 3 → 5 Einträge
+
+**Nicht verifiziert:** ob die Textur tatsächlich erscheint. Der Sandbox-Proxy blockiert
+`transparenttextures.com`. Die CSS-Regel ist korrekt, die Darstellung zeigt sich erst
+im Deployment.
+
+### Weiterhin offen
+
+- **`public/icons.svg`** (Bluesky-Symbole) wird nirgends referenziert — löschen oder
+  einbauen?
+- **Rate-Limit-Fehlerpfad (E1 in `TEST-REPORT.md`).** Bei 60 Requests pro Stunde und IP
+  rendert die Seite die rohe API-Meldung, und die enthält die IP-Adresse des Besuchers.
+- **CSP (S4).** Jetzt konkreter zu entscheiden, da mit der externen Textur ein
+  `img-src`-Eintrag für `transparenttextures.com` nötig würde.
+- **Accessibility (E2, E5, E8).** Keine Überschriften-Semantik, keine Ansage von Lade-
+  und Fehlerzuständen.
