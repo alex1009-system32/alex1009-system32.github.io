@@ -1,10 +1,21 @@
-@import "tailwindcss";
+/* source(none) schaltet die automatische Quellensuche ab. Ohne das scannt
+   Tailwind v4 das ganze Projekt und baut Klassennamen, die irgendwo im
+   Fließtext einer Markdown-Datei stehen, als echte Utilities ins Bundle. */
+@import "tailwindcss" source(none);
+
+@source "../**/*.{ts,tsx}";
+@source "../../index.html";
 
 @theme {
   --color-wood-800: #504a44;
+  /* Mittelwert aus wood-800 und wood-950 — wurde im Code benutzt, war aber nie
+     definiert und fiel deshalb still auf die geerbte Farbe zurück. */
+  --color-wood-900: #3c3733;
   --color-wood-950: #282522;
 
   --color-sand-500: #d9cdba;
+  /* Auf der Strecke sand-500 → sand-900, näher an sand-900. Gleiche Vorgeschichte. */
+  --color-sand-800: #ab9e90;
   --color-sand-900: #9b8e82;
 
   --color-gravel-500: #5a5852;

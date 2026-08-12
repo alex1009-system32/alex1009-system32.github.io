@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "projekt": "alex1009-system32.github.io",
+  "bereich": "frontend",
+  "erstelltAm": "2026-08-12",
+  "runner": {
+    "installBefehl": "npm ci",
+    "testBefehl": "npx vitest run",
+    "einzeltestBefehl": "npx vitest run {datei}",
+    "arbeitsverzeichnis": "."
+  },
+  "baseline": {
+    "commit": "9dac13d",
+    "status": "gruen",
+    "geprueftAm": "2026-08-12",
+    "ergebnis": "21 von 21 Tests gruen, ueber fuenf Laeufe stabil. Keine act-Warnungen, keine unbehandelten Promise-Rejections.",
+    "notiz": "Der erste Lauf war rot (3 von 21). Alle drei Fehlschlaege waren Testdefekte, kein Produktivcode-Bug: (1) getByText matcht nur direkte Text-Kindknoten, nicht textContent - die Regex auf 'MISSION: <bio>' konnte nie greifen, weil das Label in einem span steht; (2) findAllByText loest beim ersten Treffer auf und sah im Fehlerfall den Zwischenstand mit 2 statt 3 Bloecken - ersetzt durch waitFor; (3) die Fixture enthaelt unter den ersten drei Repos zwei nicht-archivierte, 'STATUS: Live' kommt also zweimal vor. Alle drei Korrekturen praezisieren die Assertions, keine wurde abgeschwaecht. Nach Schritt 7 (Textkorrekturen) wurden sieben Tests erwartungsgemaess rot und mit den korrigierten Texten nachgezogen - die Verhaltensaenderung ist im Plan als solche markiert."
+  },
+  "tests": [
+    {
+      "id": "char-seite-geladen",
+      "datei": "tests/characterization/app.test.tsx",
+      "art": "characterization",
+      "umbauschritte": [
+        3,
+        4,
+        5,
+        7
+      ],
+      "decktAb": "Gesamte Seite im geladenen, ladenden und fehlerhaften Zustand: Kopfbereich (Name, Ort, Datum, Avatar, Tagline), ABOUT mit Bio als MISSION, alphabetisch sortierte Skills, Abschnittsnummerierung, drei separate Lade- und Fehlerbloecke",
+      "baselineErwartung": "gruen",
+      "vertrauen": "sicher",
+      "notiz": "Hielt bis Schritt 6 bewusst den Tippfehler 'Porjects' und die doppelt vergebene Nummer '02.' fest; Schritt 7 hat beide korrigiert, der Test schlug an und wurde nachgezogen. Der Test zur Anzahl der Ladehinweise (3) sichert weiterhin ab, dass Schritt 4 nur das Markup zusammenfasst."
+    },
+    {
+      "id": "char-projektliste",
+      "datei": "tests/characterization/projects.test.tsx",
+      "art": "characterization",
+      "umbauschritte": [
+        3,
+        4,
+        5,
+        7
+      ],
+      "decktAb": "Projektliste: initial drei Eintraege, Nachladen ueber 'Show More', Ausblenden des Buttons am Listenende, Datum/Status/Sprache je Eintrag, Ersatztexte 'Mixed' und 'No description provided.', Repository-Links",
+      "baselineErwartung": "gruen",
+      "vertrauen": "sicher",
+      "notiz": "Das Nachladen ist der Test fuer das fehlende key-Prop (Fund B1, Schritt 3): vor und nach dem Fix identisch gruen. Hielt zudem die Tippfehler 'Archivid' und '>> COURCE CODE' fest, bis Schritt 7 sie zu 'Archived' und '>> SOURCE CODE' korrigierte."
+    },
+    {
+      "id": "sec-externe-links-und-alt",
+      "datei": "tests/security/external-links.test.tsx",
+      "art": "security",
+      "umbauschritte": [
+        1,
+        4,
+        5,
+        7
+      ],
+      "decktAb": "Jeder Link mit target='_blank' traegt rel='noopener noreferrer'; das Profilbild hat einen Ersatztext",
+      "baselineErwartung": "gruen",
+      "vertrauen": "sicher",
+      "notiz": "Beweist die Funde S1 und B8. Abweichend vom Normalfall bereits in der Baseline gruen, weil Umbauschritt 1 (Security-Hygiene) vor dem Testnetz umgesetzt wurde. Zweck hier ist die Regressionssicherung fuer die Schritte 4 und 5, in denen die Komponenten verschoben und umbenannt werden."
+    },
+    {
+      "id": "edge-config-nutzername",
+      "datei": "tests/edge-cases/config.test.ts",
+      "art": "edge-case",
+      "umbauschritte": [],
+      "decktAb": "Nutzername aus VITE_GITHUB_USERNAME: Uebernahme, Trimmen von Leerzeichen, Fallback bei fehlender und bei leerer Variable, unveraenderte API-Basis-URL",
+      "baselineErwartung": "gruen",
+      "vertrauen": "sicher",
+      "notiz": "Nachtraeglicher Wunsch ausserhalb des Umbauplans, daher keine Zuordnung zu einem Umbauschritt. Das Modul liest die Variable einmal beim Laden, deshalb je Fall vi.resetModules() plus dynamischer Import - ein Test ohne das wuerde immer den Wert des ersten Imports pruefen und still gruen bleiben."
+    }
+  ],
+  "ungedeckteSchritte": [
+    {
+      "schritt": 1,
+      "grund": "Teilweise gedeckt durch sec-externe-links-und-alt. Nicht testbar auf Jest-/Vitest-Ebene: .gitignore-Eintrag, npm ci im GitHub-Actions-Workflow und npm audit fix - reine Repo- und Build-Konfiguration ohne DOM-Auswirkung. Pruefung erfolgt ueber npm audit und den CI-Lauf."
+    },
+    {
+      "schritt": 2,
+      "grund": "Der Schritt legt das Testnetz selbst an und hat keinen Produktivcode-Anteil."
+    }
+  ]
+}
