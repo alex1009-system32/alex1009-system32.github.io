@@ -16,6 +16,12 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        env:
+          # Optional als Repository-Variable setzen (Settings > Secrets and
+          # variables > Actions > Variables). Ohne sie greift der Fallback in
+          # src/lib/config.ts. Der GITHUB_-Praefix ist bei Actions reserviert,
+          # daher PORTFOLIO_GITHUB_USERNAME.
+          VITE_GITHUB_USERNAME: ${{ vars.PORTFOLIO_GITHUB_USERNAME }}
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:

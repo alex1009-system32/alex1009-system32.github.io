@@ -61,6 +61,16 @@
       "baselineErwartung": "gruen",
       "vertrauen": "sicher",
       "notiz": "Beweist die Funde S1 und B8. Abweichend vom Normalfall bereits in der Baseline gruen, weil Umbauschritt 1 (Security-Hygiene) vor dem Testnetz umgesetzt wurde. Zweck hier ist die Regressionssicherung fuer die Schritte 4 und 5, in denen die Komponenten verschoben und umbenannt werden."
+    },
+    {
+      "id": "edge-config-nutzername",
+      "datei": "tests/edge-cases/config.test.ts",
+      "art": "edge-case",
+      "umbauschritte": [],
+      "decktAb": "Nutzername aus VITE_GITHUB_USERNAME: Uebernahme, Trimmen von Leerzeichen, Fallback bei fehlender und bei leerer Variable, unveraenderte API-Basis-URL",
+      "baselineErwartung": "gruen",
+      "vertrauen": "sicher",
+      "notiz": "Nachtraeglicher Wunsch ausserhalb des Umbauplans, daher keine Zuordnung zu einem Umbauschritt. Das Modul liest die Variable einmal beim Laden, deshalb je Fall vi.resetModules() plus dynamischer Import - ein Test ohne das wuerde immer den Wert des ersten Imports pruefen und still gruen bleiben."
     }
   ],
   "ungedeckteSchritte": [
